@@ -1,5 +1,6 @@
 require "kemal"
-
-get "/" do
-  "Hello World!"
+module B
+  get "/" do
+    "Hello World!"
+  end
 end

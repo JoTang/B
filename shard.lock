@@ -1,5 +1,13 @@
 version: 1.0
 shards:
+  active_record:
+    github: waterlink/active_record.cr
+    version: 0.4.3
+
+  db:
+    github: crystal-lang/crystal-db
+    commit: d7fdf1eada852ea084b7b9786e149094ec5270e0
+
   kemal:
     github: sdogruyol/kemal
     commit: cf2144636d9d5cef9d8b3f7b3404b003cedb3760
@@ -8,6 +16,10 @@ shards:
     github: jeromegn/kilt
     version: 0.3.3
 
+  pool:
+    github: ysbaddaden/pool
+    version: 0.2.3
+
   radix:
     github: luislavena/radix
     version: 0.3.1
@@ -15,4 +27,12 @@ shards:
   spec-kemal:
     github: sdogruyol/spec-kemal
     commit: fee1b2b7c006b685d61c8fcea63d130aa8ef1af6
+
+  sqlite3:
+    github: manastech/crystal-sqlite3
+    version: 0.6.0
+
+  sqlite_adapter:
+    github: trapped/sqlite_adapter.cr
+    version: 0.1.0
 
