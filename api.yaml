@@ -1,0 +1,58 @@
+swagger: '2.0'
+info:
+  description: API-based money management 
+  version: 1.0.0
+  title: B
+paths:
+  /transaction:
+    get:
+      responses:
+        200:
+          description: Get all transactions
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+    post:
+      summary: Adds a transaction to the system
+      parameters:
+        - name: amount
+          description: the amount of this transaction. Like 500 or -200
+          type: number
+          in: formData
+          required: true
+        - name: description
+          description: description of this transaction
+          type: string
+          in: formData
+          required: true
+        - name: time
+          description: unix timestamp for this transaction. Leave blank to use current time.
+          type: number
+          in: formData
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+definitions:
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: number
+      amount:
+        type: number
+        description: the amount of this transaction. Like 500 or -200
+      time:
+        type: number
+        description: unix timestamp for this transaction
+      description:
+        type: string
+        description: description of this transaction
+      ip:
+        type: string
+        description: ip address of the creator of this transaction
+      user-agent:
+        type: string
+        description: user-agent of the creator of this transaction
