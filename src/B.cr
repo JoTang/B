@@ -5,11 +5,11 @@ module B
   
 end
 
-DB.open "sqlite3://./data.db" do |db|
+DB.open B::DATA_URL do |db|
   db.exec "CREATE TABLE IF NOT EXISTS transactions (
-    id INTEGER PRIMARY KEY DESC,
+    id INTEGER PRIMARY KEY,
     amount INTEGER,
-    time INTEGER,    
+    time INTEGER DESC,
     ip TEXT,
     ua TEXT,
     description TEXT
