@@ -13,9 +13,5 @@ dependencies:
   spec-kemal:
     github: sdogruyol/spec-kemal
     branch: master
-  active_record:
-    github: waterlink/active_record.cr
-    version: ~> 0.4
-  sqlite_adapter:
-    github: trapped/sqlite_adapter.cr
-    version: 0.1.0
+  sqlite3:
+    github: crystal-lang/crystal-sqlite3

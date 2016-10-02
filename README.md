@@ -20,7 +20,7 @@ TODO: Write development instructions here
 
 ## Contributing
 
-1. Fork it ( https://github.com/[your-github-name]/B/fork )
+1. Fork it ( https://github.com/whtsky/B/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -28,4 +28,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [[your-github-name]](https://github.com/[your-github-name]) whtsky - creator, maintainer
+- [whtsky](https://github.com/whtsky) whtsky - creator, maintainer
