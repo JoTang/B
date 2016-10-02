@@ -2,5 +2,11 @@ language: crystal
 crystal:
   - latest
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y libsqlite3-dev
+  # https://github.com/crystal-lang/crystal-sqlite3/blob/aa641a0fc7678a046bde5af23f101467fed6ddd8/.travis.yml
+  - sudo apt-get autoremove sqlite3
+  - sudo apt-get install python-software-properties
+  - sudo apt-add-repository -y ppa:travis-ci/sqlite3
+  - sudo apt-get -y update
+  - sudo apt-cache show sqlite3
+  - sudo apt-get install sqlite3=3.7.15.1-1~travis1
+  - sudo sqlite3 -version
