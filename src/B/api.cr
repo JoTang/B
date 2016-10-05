@@ -9,7 +9,7 @@ module B
   get "/transaction" do |env|
     env.response.content_type = "application/json"
     datas = [] of Hash(String, Int64 | String)
-    DB.open DATA_URL do |db|
+    DB.open DATABASE_URL do |db|
       db.query "select id, amount, time, ip, ua, description from transactions order by time desc" do |rs|
         rs.each do
           datas << {
@@ -31,27 +31,18 @@ module B
     begin
       data = {
         "amount" => env.params.json["amount"].as(Int64),
-        "description" => env.params.json["description"].as(String)
+        "description" => env.params.json["description"].as(String),
+        "time" => env.params.json.fetch("time", Time.now.epoch_ms).as(Int64)
       }
     rescue
       env.response.status_code = 401
-      return {
+      next {
         "error": "invalid input"
       }.to_json
     end
 
-    begin
-      data["time"] = env.params.json["time"].as(Int64)
-    rescue
-      data["time"] = Time.now.epoch_ms
-    end
-
-    begin
-    rescue
-    end
-
     env.response.status_code = 201
     # Todo: Return new transaction WITH ID
-    return data.to_json
+    data.to_json
   end
 end

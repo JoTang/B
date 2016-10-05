@@ -16,7 +16,7 @@ describe B do
   end
 
   it "response with one transaction data" do
-    DB.open B::DATA_URL do |db|
+    DB.open B::DATABASE_URL do |db|
       db.exec "insert into transactions values (321, -23, 65535, '10.10.10.2', 'user-agent', 'desc')"
     end
     get "/transaction"
@@ -31,7 +31,7 @@ describe B do
   end
 
   it "order transactions with time desc" do
-    DB.open B::DATA_URL do |db|
+    DB.open B::DATABASE_URL do |db|
       db.exec "insert into transactions values (322, -23, 65537, '10.10.10.4', 'user-agent', 'desc')"
       db.exec "insert into transactions values (323, -23, 65533, '10.10.10.9', 'user-agent', 'desc')"
     end
@@ -103,8 +103,8 @@ describe B do
   end
 
   it "creates transaction entry in DB" do
-    DB.open B::DATA_URL do |db|
-      db.exec "TRUNCATE TABLE transactions"
+    DB.open B::DATABASE_URL do |db|
+      db.exec "delete * from transactions"
       db.scalar("select count(*) from transactions").should eq(0)
     end
 
@@ -113,7 +113,7 @@ describe B do
       description: "2321"
     }.to_json
 
-    DB.open B::DATA_URL do |db|
+    DB.open B::DATABASE_URL do |db|
       db.scalar("select count(*) from transactions").should eq(1)
     end
 

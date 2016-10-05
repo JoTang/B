@@ -5,7 +5,7 @@ module B
   
 end
 
-DB.open B::DATA_URL do |db|
+DB.open B::DATABASE_URL do |db|
   db.exec "CREATE TABLE IF NOT EXISTS transactions (
     id INTEGER PRIMARY KEY,
     amount INTEGER,
