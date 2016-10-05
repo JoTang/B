@@ -28,17 +28,27 @@ module B
 
   post "/transaction" do |env|
     env.response.content_type = "application/json"
-    time = env.params.body["time"]
     begin
-      
+      amount = env.params.json["amount"].as(Int64)
+      description = env.params.json["description"].as(String)
     rescue
-      
+      env.response.status_code = 401
+      return {
+        "error": "invalid input"
+      }.to_json
     end
-    
+
     begin
-
+      time = env.params.json["time"].as(Int64)
     rescue
-
+      time = Time.now.epoch_ms
     end
+
+    begin
+    rescue
+    end
+
+    env.response.status_code = 201
+    return {}
   end
 end

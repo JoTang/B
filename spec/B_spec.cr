@@ -62,5 +62,35 @@ describe B do
     ].to_json
   end
 
+  it "returns 401 when input is invalid" do
+    post "/transaction", headers: HTTP::Headers{"Content-Type" => "application/json"}, body: {
+      amount: 321
+    }.to_json
+
+    response.status_code.should eq 401
+
+    post "/transaction", headers: HTTP::Headers{"Content-Type" => "application/json"}, body: {
+      description: "Foo"
+    }.to_json
+
+    response.status_code.should eq 401
+
+    post "/transaction", headers: HTTP::Headers{"Content-Type" => "application/json"}, body: {
+      amount: "ww",
+      description: "2321"
+    }.to_json
+
+    response.status_code.should eq 401
+  end
+
+  it "returns 201 when emit time" do
+    post "/transaction", headers: HTTP::Headers{"Content-Type" => "application/json"}, body: {
+      amount: 321,
+      description: "2321"
+    }.to_json
+
+    response.status_code.should eq 201
+  end
+
   stop
 end
