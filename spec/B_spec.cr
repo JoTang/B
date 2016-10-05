@@ -83,6 +83,16 @@ describe B do
     response.status_code.should eq 401
   end
 
+  it "returns 201 when create successful" do
+    post "/transaction", headers: HTTP::Headers{"Content-Type" => "application/json"}, body: {
+      amount: 321,
+      description: "2321",
+      time: Time.now.epoch_ms
+    }.to_json
+
+    response.status_code.should eq 201
+  end
+
   it "returns 201 when emit time" do
     post "/transaction", headers: HTTP::Headers{"Content-Type" => "application/json"}, body: {
       amount: 321,
@@ -90,6 +100,23 @@ describe B do
     }.to_json
 
     response.status_code.should eq 201
+  end
+
+  it "creates transaction entry in DB" do
+    DB.open B::DATA_URL do |db|
+      db.exec "TRUNCATE TABLE transactions"
+      db.scalar("select count(*) from transactions").should eq(0)
+    end
+
+    post "/transaction", headers: HTTP::Headers{"Content-Type" => "application/json"}, body: {
+      amount: 321,
+      description: "2321"
+    }.to_json
+
+    DB.open B::DATA_URL do |db|
+      db.scalar("select count(*) from transactions").should eq(1)
+    end
+
   end
 
   stop

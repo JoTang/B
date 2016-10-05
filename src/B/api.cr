@@ -29,8 +29,10 @@ module B
   post "/transaction" do |env|
     env.response.content_type = "application/json"
     begin
-      amount = env.params.json["amount"].as(Int64)
-      description = env.params.json["description"].as(String)
+      data = {
+        "amount" => env.params.json["amount"].as(Int64),
+        "description" => env.params.json["description"].as(String)
+      }
     rescue
       env.response.status_code = 401
       return {
@@ -39,9 +41,9 @@ module B
     end
 
     begin
-      time = env.params.json["time"].as(Int64)
+      data["time"] = env.params.json["time"].as(Int64)
     rescue
-      time = Time.now.epoch_ms
+      data["time"] = Time.now.epoch_ms
     end
 
     begin
@@ -49,6 +51,7 @@ module B
     end
 
     env.response.status_code = 201
-    return {}
+    # Todo: Return new transaction WITH ID
+    return data.to_json
   end
 end
