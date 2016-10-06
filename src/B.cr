@@ -15,4 +15,5 @@ DB.open B::DATABASE_URL do |db|
     description TEXT
   )"
 end
+
 Kemal.run

@@ -28,10 +28,13 @@ module B
 
   post "/transaction" do |context|
     context.response.content_type = "application/json"
+    headers = context.request.headers
     begin
       data = {
         "amount" => context.params.json["amount"].as(Int64),
         "description" => context.params.json["description"].as(String),
+        "ua" => headers["User-Agent"].as(String),
+        "ip" => headers.fetch("X-Real-Ip", headers.fetch("X-Forwarded-For", "127.0.0.1")).as(String),
         "time" => context.params.json.fetch("time", Time.now.epoch_ms).as(Int64)
       }
     rescue
@@ -39,6 +42,17 @@ module B
       next {
         "error": "invalid input"
       }.to_json
+    end
+
+    args = [] of DB::Any
+    args << data["amount"]
+    args << data["time"]
+    args << data["ip"]
+    args << data["ua"]
+    args << data["description"]
+    DB.open DATABASE_URL do |db|
+      rv = db.exec("insert into transactions (amount, time, ip, ua, description) values (?, ?, ?, ?, ?)", args)
+      data["id"] = rv.last_insert_id
     end
 
     context.response.status_code = 201
