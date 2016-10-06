@@ -11,6 +11,9 @@ describe B do
   end
 
   it "response with no transaction data at first" do
+    DB.open B::DATABASE_URL do |db|
+      db.exec "delete from transactions"
+    end
     get "/transaction"
     response.body.should eq "[]"
   end
@@ -104,7 +107,7 @@ describe B do
 
   it "creates transaction entry in DB" do
     DB.open B::DATABASE_URL do |db|
-      db.exec "delete * from transactions"
+      db.exec "delete from transactions"
       db.scalar("select count(*) from transactions").should eq(0)
     end
 
