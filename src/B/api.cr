@@ -6,8 +6,8 @@ module B
     "Hello World!"
   end
 
-  get "/transaction" do |env|
-    env.response.content_type = "application/json"
+  get "/transaction" do |context|
+    context.response.content_type = "application/json"
     datas = [] of Hash(String, Int64 | String)
     DB.open DATABASE_URL do |db|
       db.query "select id, amount, time, ip, ua, description from transactions order by time desc" do |rs|
@@ -26,22 +26,22 @@ module B
     datas.to_json
   end
 
-  post "/transaction" do |env|
-    env.response.content_type = "application/json"
+  post "/transaction" do |context|
+    context.response.content_type = "application/json"
     begin
       data = {
-        "amount" => env.params.json["amount"].as(Int64),
-        "description" => env.params.json["description"].as(String),
-        "time" => env.params.json.fetch("time", Time.now.epoch_ms).as(Int64)
+        "amount" => context.params.json["amount"].as(Int64),
+        "description" => context.params.json["description"].as(String),
+        "time" => context.params.json.fetch("time", Time.now.epoch_ms).as(Int64)
       }
     rescue
-      env.response.status_code = 401
+      context.response.status_code = 401
       next {
         "error": "invalid input"
       }.to_json
     end
 
-    env.response.status_code = 201
+    context.response.status_code = 201
     # Todo: Return new transaction WITH ID
     data.to_json
   end
