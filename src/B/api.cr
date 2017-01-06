@@ -33,7 +33,7 @@ module B
       data = {
         "amount" => context.params.json["amount"].as(Int64),
         "description" => context.params.json["description"].as(String),
-        "ua" => headers["User-Agent"].as(String),
+        "ua" => headers.fetch("User-Agent", "Unknown").as(String),
         "ip" => headers.fetch("X-Real-Ip", headers.fetch("X-Forwarded-For", "127.0.0.1")).as(String),
         "time" => context.params.json.fetch("time", Time.now.epoch_ms).as(Int64)
       }

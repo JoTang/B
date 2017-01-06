@@ -10,3 +10,6 @@ before_install:
   - sudo apt-cache show sqlite3
   - sudo apt-get install sqlite3=3.7.15.1-1~travis1
   - sudo sqlite3 -version
+
+script:
+  - KEMAL_ENV=test crystal spec

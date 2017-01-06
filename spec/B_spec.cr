@@ -2,8 +2,6 @@ require "./spec_helper"
 require "sqlite3"
 
 describe B do
-  start
-
   # You can use get,post,put,patch,delete to call the corresponding route.
   it "renders /" do
     get "/"
@@ -121,6 +119,4 @@ describe B do
     end
 
   end
-
-  stop
 end
