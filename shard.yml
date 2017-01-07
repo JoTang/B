@@ -1,17 +1,26 @@
 name: B
-version: 0.1.0
+version: 0.2.0
 
 authors:
   - whtsky <whtsky@gmail.com>
 
 license: MIT
 
+crystal: 0.20.3
+
 dependencies:
   kemal:
     github: sdogruyol/kemal
-    branch: master
-  spec-kemal:
-    github: sdogruyol/spec-kemal
-    branch: master
+    version: 0.17.4
   sqlite3:
     github: crystal-lang/crystal-sqlite3
+    version: 0.8.1
+
+development_dependencies:
+  spec-kemal:
+    github: sdogruyol/spec-kemal
+    version: 0.3.0
+
+targets:
+  B:
+    main: src/B.cr
