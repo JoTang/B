@@ -19,7 +19,7 @@ dependencies:
 development_dependencies:
   spec-kemal:
     github: sdogruyol/spec-kemal
-    version: 0.3.0
+    commit: 555804d29a097398fab37d5508e3e7a6628ebffa # version = 0.3.0, tag = 0.4.0 ?????
 
 targets:
   B:
