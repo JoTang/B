@@ -8,13 +8,13 @@ module B
 
   get "/transaction" do |context|
     context.response.content_type = "application/json"
-    datas = [] of Hash(String, Int64 | String)
+    datas = [] of Hash(String, Int64 | Float64 | String)
     DB.open DATABASE_URL do |db|
       db.query "select id, amount, time, ip, ua, description from transactions order by time desc" do |rs|
         rs.each do
           datas << {
             "id" => rs.read(Int64),
-            "amount" => rs.read(Int64),
+            "amount" => rs.read(Float64),
             "time" => rs.read(Int64),
             "ip" => rs.read(String),
             "ua" => rs.read(String),
@@ -31,7 +31,7 @@ module B
     headers = context.request.headers
     begin
       data = {
-        "amount" => context.params.json["amount"].as(Int64),
+        "amount" => context.params.json["amount"].as(Int64 | Float64),
         "description" => context.params.json["description"].as(String),
         "ua" => headers.fetch("User-Agent", "Unknown").as(String),
         "ip" => headers.fetch("X-Real-Ip", headers.fetch("X-Forwarded-For", "127.0.0.1")).as(String),

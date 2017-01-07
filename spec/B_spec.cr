@@ -2,7 +2,7 @@ require "./spec_helper"
 require "sqlite3"
 
 describe B do
-  # You can use get,post,put,patch,delete to call the corresponding route.
+
   it "renders /" do
     get "/"
     response.body.should eq "Hello World!"
@@ -18,12 +18,13 @@ describe B do
 
   it "response with one transaction data" do
     DB.open B::DATABASE_URL do |db|
-      db.exec "insert into transactions values (321, -23, 65535, '10.10.10.2', 'user-agent', 'desc')"
+      db.exec "delete from transactions"
+      db.exec "insert into transactions values (321, -23.7, 65535, '10.10.10.2', 'user-agent', 'desc')"
     end
     get "/transaction"
     response.body.should eq [{
       "id" => 321,
-      "amount" => -23,
+      "amount" => -23.7,
       "time" => 65535,
       "ip" => "10.10.10.2",
       "ua" => "user-agent",
@@ -33,28 +34,30 @@ describe B do
 
   it "order transactions with time desc" do
     DB.open B::DATABASE_URL do |db|
-      db.exec "insert into transactions values (322, -23, 65537, '10.10.10.4', 'user-agent', 'desc')"
-      db.exec "insert into transactions values (323, -23, 65533, '10.10.10.9', 'user-agent', 'desc')"
+      db.exec "delete from transactions"
+      db.exec "insert into transactions values (322, -23.5, 65537, '10.10.10.4', 'user-agent', 'desc')"
+      db.exec "insert into transactions values (323, -25, 65533, '10.10.10.9', 'user-agent', 'desc')"
+      db.exec "insert into transactions values (321, -23, 65535, '10.10.10.2', 'user-agent', 'desc')"
     end
     get "/transaction"
     response.body.should eq [
       {
         "id" => 322,
-        "amount" => -23,
+        "amount" => -23.5,
         "time" => 65537,
         "ip" => "10.10.10.4",
         "ua" => "user-agent",
         "description" => "desc"
       }, {
         "id" => 321,
-        "amount" => -23,
+        "amount" => -23.0,
         "time" => 65535,
         "ip" => "10.10.10.2",
         "ua" => "user-agent",
         "description" => "desc"
       }, {
         "id" => 323,
-        "amount" => -23,
+        "amount" => -25.0,
         "time" => 65533,
         "ip" => "10.10.10.9",
         "ua" => "user-agent",
@@ -65,7 +68,7 @@ describe B do
 
   it "returns 401 when input is invalid" do
     post "/transaction", headers: HTTP::Headers{"Content-Type" => "application/json"}, body: {
-      amount: 321
+      amount: 321.1
     }.to_json
 
     response.status_code.should eq 401
@@ -96,7 +99,7 @@ describe B do
 
   it "returns 201 when emit time" do
     post "/transaction", headers: HTTP::Headers{"Content-Type" => "application/json"}, body: {
-      amount: 321,
+      amount: 321.66,
       description: "2321"
     }.to_json
 
@@ -113,6 +116,7 @@ describe B do
       amount: 321,
       description: "2321"
     }.to_json
+    response.status_code.should eq 201
 
     DB.open B::DATABASE_URL do |db|
       db.scalar("select count(*) from transactions").should eq(1)

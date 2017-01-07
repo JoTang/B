@@ -8,7 +8,7 @@ end
 DB.open B::DATABASE_URL do |db|
   db.exec "CREATE TABLE IF NOT EXISTS transactions (
     id INTEGER PRIMARY KEY,
-    amount INTEGER,
+    amount FLOAT,
     time INTEGER DESC,
     ip TEXT,
     ua TEXT,
