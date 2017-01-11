@@ -18,7 +18,7 @@ paths:
       parameters:
         - name: amount
           description: the amount of this transaction. Like 500.7 or -200
-          type: double
+          type: number
           in: formData
           required: true
         - name: description
@@ -28,7 +28,7 @@ paths:
           required: true
         - name: time
           description: unix timestamp for this transaction. Leave blank to use current time.
-          type: number
+          type: integer
           in: formData
       responses:
         201:
@@ -40,12 +40,12 @@ definitions:
     type: object
     properties:
       id:
-        type: number
+        type: integer
       amount:
-        type: double
+        type: number
         description: the amount of this transaction. Like 500 or -200
       time:
-        type: number
+        type: integer
         description: unix timestamp for this transaction
       description:
         type: string
