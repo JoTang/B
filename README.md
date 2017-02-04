@@ -1,22 +1,29 @@
 # B
 
-TODO: Write a description here
+Probably the most shabby money management backend in the world.
 
-## Installation
+## Run with Docker
+```bash
+TBD
+```
 
+## Build and Run by hand
 
-TODO: Write installation instructions here
+Make sure you have [Crystal](https://crystal-lang.org/) installed.
 
+```bash
+git clone https://github.com/whtsky/B.git
+cd B
+shards install --production
+shards build --release
+
+KEMAL_ENV=production B_DATABASE=sqlite3://./data.db bin/B
+```
+Currently only SQLite3 database is supported.
 
 ## Usage
 
-
-
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
+B only provides JSON API for create transaction and list all transactions. Check `api.yaml` to see API doc. ( It's a [Swagger](http://swagger.io/) YAML )
 
 ## Contributing
 

@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  description: API-based money management 
+  description: Probably the most shabby money management backend in the world.
   version: 1.0.0
   title: B
 paths:

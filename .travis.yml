@@ -13,3 +13,6 @@ before_install:
 
 script:
   - KEMAL_ENV=test crystal spec
+
+after_script:
+  - shards build --release
