@@ -1,3 +1,3 @@
 module B
-  DATABASE_URL = ENV.fetch("B_DATABASE", "sqlite3://./data.db")
+  DATABASE_URL = "sqlite3://" + ENV.fetch("B_DATABASE", "data.db")
 end

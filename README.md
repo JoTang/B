@@ -4,7 +4,7 @@ Probably the most shabby money management backend in the world.
 
 ## Run with Docker
 ```bash
-TBD
+docker run -p 3000:3000 whtsky/b-server
 ```
 
 ## Build and Run by hand
@@ -17,9 +17,8 @@ cd B
 shards install --production
 shards build --release
 
-KEMAL_ENV=production B_DATABASE=sqlite3://./data.db bin/B
+KEMAL_ENV=production B_DATABASE=data.db bin/B
 ```
-Currently only SQLite3 database is supported.
 
 ## Usage
 
