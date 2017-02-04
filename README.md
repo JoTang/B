@@ -1,6 +1,7 @@
 # B
 
 Probably the most shabby money management backend in the world.
+[![Build Status](https://travis-ci.org/whtsky/B.svg?branch=master)](https://travis-ci.org/whtsky/B)
 
 ## Run with Docker
 ```bash
